@@ -10,8 +10,7 @@
 
 ## Demo
 
-![Demo](./demo.gif)
-*(Placeholder: Effects demo appearing here)*
+![Demo](./demo.webp)
 
 ## Features
 

@@ -1,0 +1,41 @@
+.iris-wipe {
+  /* Default values, usually overridden by inline styles */
+  --iris-cx: 50%;
+  --iris-cy: 50%;
+  --iris-duration: 500ms;
+  --iris-easing: ease-in-out;
+  
+  /* The radius is controlled effectively by the 'open' vs 'closed' state logic in JS/CSS 
+     In this implementation, we toggle a class or data-attribute to switch states.
+     However, to keep it purely CSS transition based on a single property change in JS usually requires
+     changing a property that affects the clip-path.
+  */
+  
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  
+  /* Hardware acceleration */
+  will-change: clip-path;
+  
+  /* The transition itself */
+  transition: clip-path var(--iris-duration) var(--iris-easing);
+}
+
+/* 
+   State: Open
+   Radius is large enough to cover the screen. 150% is usually safe for most aspect ratios from center.
+   If corner, might need more, but let's stick to 150% as per requirements.
+*/
+.iris-wipe[data-state="open"] {
+  clip-path: circle(150% at var(--iris-cx) var(--iris-cy));
+}
+
+/* 
+   State: Closed
+   Radius is 0%.
+*/
+.iris-wipe[data-state="closed"] {
+  clip-path: circle(0% at var(--iris-cx) var(--iris-cy));
+}

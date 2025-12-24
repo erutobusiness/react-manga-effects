@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'v0.') || startsWith(github.event.head_commit.message, '0.')
+    if: startsWith(github.event.head_commit.message, 'v0.') || startsWith(github.event.head_commit.message, '0.') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read

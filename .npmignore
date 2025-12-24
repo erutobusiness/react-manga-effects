@@ -1,0 +1,26 @@
+# Source files
+src/
+.storybook/
+
+# Config files
+*.config.ts
+*.config.js
+tsconfig*.json
+.eslintrc*
+.prettierrc*
+
+# Development
+node_modules/
+.git/
+.github/
+
+# Test files
+**/*.test.*
+**/*.spec.*
+**/*.stories.*
+coverage/
+
+# Misc
+.DS_Store
+*.log
+.env*

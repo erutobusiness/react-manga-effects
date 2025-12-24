@@ -1,10 +1,38 @@
 {
-  "name": "@erutobusiness/react-manga-effects",
-  "version": "0.0.1",
-  "type": "module",
-  "files": [
-    "dist"
+  "name": "react-manga-effects",
+  "version": "0.1.0",
+  "description": "Lightweight React components for manga/anime-style visual effects - iris wipes and speed lines",
+  "keywords": [
+    "react",
+    "manga",
+    "anime",
+    "effects",
+    "iris-wipe",
+    "speed-lines",
+    "focus-lines",
+    "transition",
+    "animation",
+    "typescript"
   ],
+  "homepage": "https://github.com/erutobusiness/react-manga-effects#readme",
+  "bugs": {
+    "url": "https://github.com/erutobusiness/react-manga-effects/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erutobusiness/react-manga-effects.git"
+  },
+  "license": "MIT",
+  "author": "erutobusiness",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,7 +41,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "dev": "vite",

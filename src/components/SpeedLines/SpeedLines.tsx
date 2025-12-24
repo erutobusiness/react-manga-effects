@@ -8,9 +8,9 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
     center = { x: 50, y: 50 },
     lineCount = 60,
     color = 'rgba(0, 0, 0, 0.6)',
-    minLength = 10,  // Percentage
-    maxLength = 30,  // Percentage
-    innerRadius = 0, // Percentage
+    minLength = 30,  // Increased from 10
+    maxLength = 60,  // Increased from 30
+    innerRadius = 0,
     animated = false,
     animationSpeed = 1,
     className = '',
@@ -18,9 +18,12 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
 }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const linesRef = useRef<Line[]>([]);
+    // Store multiple frames of lines for chaotic animation
+    const framesRef = useRef<Line[][]>([]);
+    const currentFrameRef = useRef<number>(0);
     const centerRef = useRef<Point>(center);
     const timeRef = useRef<number>(0);
+    const lastFrameTimeRef = useRef<number>(0);
 
     const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
 
@@ -29,14 +32,19 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
         centerRef.current = center;
     }, [center.x, center.y]);
 
-    // Generate lines when config changes
+    // Generate frames when config changes
     useEffect(() => {
-        linesRef.current = generateLines({
-            lineCount,
-            minLength,
-            maxLength
-        });
-    }, [lineCount, minLength, maxLength]);
+        // Generate 3 sets of lines for chaotic swapping
+        const framesToGenerate = animated ? 3 : 1;
+        framesRef.current = Array.from({ length: framesToGenerate }, () =>
+            generateLines({
+                lineCount,
+                minLength,
+                maxLength
+            })
+        );
+        currentFrameRef.current = 0;
+    }, [lineCount, minLength, maxLength, animated]);
 
     // Handle Resize
     const handleResize = useCallback(() => {
@@ -76,10 +84,9 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
         const canvas = canvasRef.current;
         const container = containerRef.current;
         const ctx = canvas?.getContext('2d');
-        // Check for dimensions state to ensure we have valid size
         if (!canvas || !container || !ctx || dimensions.width === 0) return;
 
-        // Reset transform to clear (because of scale)
+        // Reset transform
         ctx.save();
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -88,7 +95,6 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
         const width = container.clientWidth;
         const height = container.clientHeight;
 
-        // Calculate max radius (diagonal from center to corner)
         const absCenter = {
             x: (centerRef.current.x / 100) * width,
             y: (centerRef.current.y / 100) * height,
@@ -99,10 +105,20 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
         const maxRadius = Math.hypot(maxDistX, maxDistY);
 
         if (animated) {
-            timeRef.current += deltaTime * 0.001;
+            timeRef.current += deltaTime;
+
+            // Swap frames every ~80ms / animationSpeed
+            const frameInterval = 80 / Math.max(0.1, animationSpeed);
+
+            if (timeRef.current - lastFrameTimeRef.current > frameInterval) {
+                currentFrameRef.current = (currentFrameRef.current + 1) % framesRef.current.length;
+                lastFrameTimeRef.current = timeRef.current;
+            }
         }
 
-        linesRef.current.forEach((line) => {
+        const currentLines = framesRef.current[currentFrameRef.current] || [];
+
+        currentLines.forEach((line) => {
             drawLine(
                 ctx,
                 line,
@@ -111,23 +127,14 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
                 innerRadius,
                 color,
                 width,
-                height,
-                timeRef.current,
-                animated,
-                animationSpeed
+                height
             );
         });
     }, [color, innerRadius, animated, animationSpeed, dimensions]);
 
-    // If animated, loop. If static, draw once (or re-draw on change).
-    // useAnimationLoop handles the loop.
-    // If not animated, we should still draw once initially or on updates.
-    // However, useAnimationLoop usually stops callback when !isPlaying.
-    // We need to force a draw when static state changes.
-
     useAnimationLoop(draw, animated);
 
-    // Initial draw for static state or updates
+    // Initial draw for static state
     useEffect(() => {
         if (!animated) {
             draw(0);

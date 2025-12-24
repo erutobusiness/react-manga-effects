@@ -46,9 +46,6 @@ export const generateLines = (config: SpeedLinesConfig): Line[] => {
         // Thick at start (outer edge), tapers to thin
         width: 2 + Math.random() * 8,
         opacity: 0.6 + Math.random() * 0.4,
-        pulseOffset: Math.random() * Math.PI * 2,
-        // Increased pulse speed to be more noticeable (was 0.5-1.0, now 2.0-5.0)
-        pulseSpeed: 2.0 + Math.random() * 3.0,
     }));
 };
 
@@ -60,21 +57,12 @@ export const drawLine = (
     innerRadiusPct: number, // 0-100
     color: string,
     width: number,
-    height: number,
-    time: number = 0,
-    animated: boolean = false,
-    animationSpeed: number = 1
+    height: number
 ): void => {
     const innerRadius = maxRadius * (innerRadiusPct / 100);
 
-    // Calculate pulse
-    let opacity = line.opacity;
-    if (animated) {
-        const pulse = Math.sin(time * line.pulseSpeed * animationSpeed + line.pulseOffset);
-        // Map sine -1..1 to 0..1 range more dramatically
-        const pulseMult = 0.5 + (pulse + 1) * 0.25; // 0.5 to 1.0 variation
-        opacity *= pulseMult;
-    }
+    // Pulse logic removed in favor of frame swapping in SpeedLines component
+    const opacity = line.opacity;
 
     // Determine start distance: The absolute edge of visible area for this angle
     const distToEdge = getDistanceToEdge(center, line.angle, width, height);
@@ -84,7 +72,6 @@ export const drawLine = (
 
     // "Length" is interpreted as: factor of total available length (edge to innerRadius)
     // Or simpler: just factor of edge distance.
-    // If length is 0.3, line covers 30% of the distance from edge to center?
     // User props minLength/maxLength defaults 10-30.
     // If we map that to "30% of distToEdge", that's reasonable.
 

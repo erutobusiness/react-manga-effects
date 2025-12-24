@@ -11,3 +11,6 @@ This document serves as a reference for AI agents interacting with this reposito
 2. Increment `version` in `package.json`.
 3. Commit changes with a descriptive message including the version bump.
 4. Push to the repository.
+
+## Documentation & Assets
+- **Demo Images**: When updating the visual appearance of a component, ALWAYS update or create corresponding demo images (screenshots/GIFs) in the `assets` directory and update `README.md` to reflect the changes.

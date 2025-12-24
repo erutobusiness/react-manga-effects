@@ -5,6 +5,7 @@
 ![npm](https://img.shields.io/npm/v/@erutobusiness/react-manga-effects)
 ![license](https://img.shields.io/npm/l/@erutobusiness/react-manga-effects)
 ![size](https://img.shields.io/bundlephobia/minzip/@erutobusiness/react-manga-effects)
+[![CI](https://github.com/erutobusiness/react-manga-effects/actions/workflows/ci.yml/badge.svg)](https://github.com/erutobusiness/react-manga-effects/actions/workflows/ci.yml)
 
 **react-manga-effects** provides lightweight, customizable high-impact visual effects common in anime and manga, such as circular iris wipes and dynamic focus lines. Built with TypeScript and optimizing for performance.
 

@@ -6,7 +6,7 @@ export const IrisWipe: React.FC<IrisWipeProps> = ({
     children,
     isOpen,
     center = { x: 50, y: 50 },
-    duration = 500,
+    duration = 1000,
     easing = 'easeInOut',
     onComplete,
     className = '',

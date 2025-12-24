@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'v0.')
+    if: startsWith(github.event.head_commit.message, 'v0.') || startsWith(github.event.head_commit.message, '0.')
     runs-on: ubuntu-latest
     permissions:
       contents: read

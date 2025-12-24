@@ -2,9 +2,9 @@
 
 > Add dramatic anime/manga impact effects to your React applications with zero fuss.
 
-![npm](https://img.shields.io/npm/v/@erutobusiness/react-manga-effects)
-![license](https://img.shields.io/npm/l/@erutobusiness/react-manga-effects)
-![size](https://img.shields.io/bundlephobia/minzip/@erutobusiness/react-manga-effects)
+![npm](https://img.shields.io/npm/v/react-manga-effects)
+![license](https://img.shields.io/npm/l/react-manga-effects)
+![size](https://img.shields.io/bundlephobia/minzip/react-manga-effects)
 [![CI](https://github.com/erutobusiness/react-manga-effects/actions/workflows/ci.yml/badge.svg)](https://github.com/erutobusiness/react-manga-effects/actions/workflows/ci.yml)
 
 **react-manga-effects** provides lightweight, customizable high-impact visual effects common in anime and manga, such as circular iris wipes and dynamic focus lines. Built with TypeScript and optimizing for performance.
@@ -25,11 +25,11 @@
 ## Installation
 
 ```bash
-npm install @erutobusiness/react-manga-effects
+npm install react-manga-effects
 # or
-yarn add @erutobusiness/react-manga-effects
+yarn add react-manga-effects
 # or
-pnpm add @erutobusiness/react-manga-effects
+pnpm add react-manga-effects
 ```
 
 ## Quick Start
@@ -38,7 +38,7 @@ Import the components and use them in your React app:
 
 ```tsx
 import React, { useState } from 'react';
-import { IrisWipe, SpeedLines } from '@erutobusiness/react-manga-effects';
+import { IrisWipe, SpeedLines } from 'react-manga-effects';
 
 const App = () => {
     const [isOpen, setIsOpen] = useState(true);

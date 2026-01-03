@@ -1,0 +1,23 @@
+.container {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+}
+
+/* Animations */
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-5px) scale(1.05);
+    }
+}

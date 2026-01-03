@@ -8,6 +8,13 @@ const meta = {
         layout: 'centered',
     },
     tags: ['autodocs'],
+    argTypes: {
+        text: {
+            control: 'text',
+            description: 'Text to display',
+            table: { category: 'Content' }
+        },
+    },
 } satisfies Meta<typeof Placeholder>;
 
 export default meta;
@@ -15,12 +22,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        text: 'Default Placeholder Text',
+        text: 'Placeholder',
     },
 };
 
-export const CustomText: Story = {
+export const LongText: Story = {
     args: {
-        text: 'Thinking Agent in Action!',
+        text: 'This is a much longer placeholder text to test wrapping handling.',
     },
 };

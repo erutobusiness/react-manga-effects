@@ -22,9 +22,9 @@ const meta = {
         },
         easing: {
             control: 'select',
-            options: ['linear', 'ease-in', 'ease-out', 'ease-in-out', 'cubic-bezier(0.68, -0.55, 0.27, 1.55)'],
-            description: 'CSS Easing function',
-            table: { category: 'Animation', defaultValue: { summary: 'ease-in-out' } },
+            options: ['linear', 'easeIn', 'easeOut', 'easeInOut'],
+            description: 'Easing preset',
+            table: { category: 'Animation', defaultValue: { summary: 'easeInOut' } },
         },
         center: {
             control: 'object',
@@ -43,12 +43,10 @@ const InteractiveWrapper = ({
     args,
     bg = '#000',
     text = 'SCENE 1',
-    overlayColor = null
 }: {
     args: React.ComponentProps<typeof IrisWipe>,
     bg?: string,
     text?: string,
-    overlayColor?: string | null
 }) => {
     const [isOpen, setIsOpen] = useState(args.isOpen ?? true);
 
@@ -141,12 +139,18 @@ const InteractiveWrapper = ({
 // --- Standard Stories ---
 
 export const Default: Story = {
+    args: {
+        isOpen: true,
+        children: null,
+    },
     render: (args) => <InteractiveWrapper args={args} />
 };
 
 export const PropDirection: Story = {
     name: 'Option: From Top Left',
     args: {
+        isOpen: true,
+        children: null,
         center: { x: 0, y: 0 },
         duration: 1500,
     },
@@ -154,12 +158,14 @@ export const PropDirection: Story = {
 };
 
 export const PropEasing: Story = {
-    name: 'Option: Bouncy Easing',
+    name: 'Option: Custom Easing',
     args: {
-        easing: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)', // Custom bounce-like effect
+        isOpen: true,
+        children: null,
+        easing: 'easeOut',
         duration: 1200,
     },
-    render: (args) => <InteractiveWrapper args={args} text="BOUNCE!" />
+    render: (args) => <InteractiveWrapper args={args} text="EASE OUT" />
 };
 
 // --- Use Cases ---
@@ -167,8 +173,10 @@ export const PropEasing: Story = {
 export const SceneTransitionStandard: Story = {
     name: 'UseCase: Standard Scene',
     args: {
+        isOpen: true,
+        children: null,
         duration: 1000,
-        easing: 'ease-in-out',
+        easing: 'easeInOut',
         center: { x: 50, y: 50 },
     },
     render: (args) => <InteractiveWrapper args={args} bg="#000" text="NEXT SCENE" />
@@ -177,8 +185,10 @@ export const SceneTransitionStandard: Story = {
 export const DreamSequence: Story = {
     name: 'UseCase: Dream Reveal',
     args: {
+        isOpen: true,
+        children: null,
         duration: 3000,
-        easing: 'ease-out',
+        easing: 'easeOut',
         center: { x: 50, y: 50 },
     },
     render: (args) => (
@@ -193,9 +203,11 @@ export const DreamSequence: Story = {
 export const DramaticEntry: Story = {
     name: 'UseCase: Dramatic Entry',
     args: {
+        isOpen: true,
+        children: null,
         duration: 4000,
-        easing: 'ease-in', // Slow start, fast finish? or ease-out? ease-in makes it start slow which builds tension.
-        center: { x: 50, y: 80 }, // Starting from bottom
+        easing: 'easeIn',
+        center: { x: 50, y: 80 },
     },
     render: (args) => <InteractiveWrapper args={args} bg="#220000" text="BOSS BATTLE" />
 };

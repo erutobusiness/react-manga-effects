@@ -197,7 +197,7 @@ export const Flashback: Story = {
         color: 'rgba(255, 255, 255, 0.8)', // White lines
     },
     render: (args) => (
-        <Wrapper bg="#sepia" text="MEMORIES...">
+        <Wrapper bg="#d4a574" text="MEMORIES...">
             {/* Adding a sepia tone image background simulation */}
             <div style={{ position: 'absolute', inset: 0, background: '#704214', opacity: 0.5, zIndex: 0 }}></div>
             <SpeedLines {...args} />

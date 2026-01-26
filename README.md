@@ -2,9 +2,9 @@
 
 > Add dramatic anime/manga impact effects to your React applications with zero fuss.
 
-![npm](https://img.shields.io/npm/v/react-manga-effects)
-![license](https://img.shields.io/npm/l/react-manga-effects)
-![size](https://img.shields.io/bundlephobia/minzip/react-manga-effects)
+[![npm](https://img.shields.io/npm/v/react-manga-effects)](https://www.npmjs.com/package/react-manga-effects)
+[![license](https://img.shields.io/npm/l/react-manga-effects)](https://github.com/erutobusiness/react-manga-effects/blob/main/LICENSE)
+[![size](https://img.shields.io/bundlephobia/minzip/react-manga-effects)](https://bundlephobia.com/package/react-manga-effects)
 [![CI](https://github.com/erutobusiness/react-manga-effects/actions/workflows/ci.yml/badge.svg)](https://github.com/erutobusiness/react-manga-effects/actions/workflows/ci.yml)
 
 **react-manga-effects** provides lightweight, customizable high-impact visual effects common in anime and manga, such as circular iris wipes and dynamic focus lines. Built with TypeScript and optimizing for performance.
@@ -23,6 +23,8 @@
 - **🎨 Highly Customizable**: Control colors, density, speed, easing, and positioning.
 
 ## Installation
+
+[View on npm](https://www.npmjs.com/package/react-manga-effects)
 
 ```bash
 npm install react-manga-effects

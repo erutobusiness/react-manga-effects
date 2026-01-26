@@ -12,3 +12,6 @@ yarn-error.log*
 pnpm-debug.log*
 coverage
 storybook-static
+
+# Local Tool Configuration
+.claude

@@ -1,6 +1,7 @@
 # Source files
 src/
 .storybook/
+dist/test
 
 # Config files
 *.config.ts

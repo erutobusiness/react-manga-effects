@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     dts({
       include: ['src'],
-      exclude: ['**/*.stories.tsx', '**/*.test.tsx'],
+      exclude: ['**/*.stories.tsx', '**/*.test.tsx', 'src/test'],
     })
   ],
   build: {

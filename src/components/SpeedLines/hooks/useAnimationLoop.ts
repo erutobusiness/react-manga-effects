@@ -4,8 +4,8 @@ export const useAnimationLoop = (
     callback: (deltaTime: number) => void,
     isActive: boolean
 ) => {
-    const requestRef = useRef<number>();
-    const previousTimeRef = useRef<number>();
+    const requestRef = useRef<number | undefined>(undefined);
+    const previousTimeRef = useRef<number | undefined>(undefined);
 
     const animate = (time: number) => {
         if (previousTimeRef.current !== undefined) {

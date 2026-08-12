@@ -16,7 +16,12 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      // Vite 8 changed the default library CSS filename from `style.css` to the
+      // package name. package.json publishes `"./style.css": "./dist/style.css"`,
+      // so taking the new default would ship a broken subpath export to every
+      // consumer. Pin the old name to keep the published artifact identical.
+      cssFileName: 'style'
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],

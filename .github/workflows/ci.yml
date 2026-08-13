@@ -19,3 +19,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+
+      # Storybook is the only place several props are exercised, and it broke
+      # silently across the 8 -> 10 upgrade until it was built by hand.
+      - run: npm run build-storybook

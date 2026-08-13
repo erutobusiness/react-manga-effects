@@ -72,6 +72,16 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
 
     useEffect(() => {
         handleResize();
+
+        // ResizeObserver is missing in jsdom, so constructing it unguarded made
+        // this component throw inside any consumer's test suite. Fall back to a
+        // window resize listener, which covers the common case of the container
+        // tracking the viewport.
+        if (typeof ResizeObserver === 'undefined') {
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }
+
         const resizeObserver = new ResizeObserver(handleResize);
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);

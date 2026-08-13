@@ -3,6 +3,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
+import { fileURLToPath } from 'url'
+
+// `__dirname` is unavailable to Vite's native config loader, which Vite 8 warns
+// about and plans to make the default.
+const here = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig({
   plugins: [
@@ -14,7 +19,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(here, 'src/index.ts'),
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
       // Vite 8 changed the default library CSS filename from `style.css` to the

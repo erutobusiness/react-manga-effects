@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import styles from './TearMark.module.css';
 
 export interface TearMarkProps {
@@ -42,7 +42,10 @@ export const TearMark: React.FC<TearMarkProps> = ({
     className = '',
     style,
 }) => {
-    const gradientId = useMemo(() => `tear-grad-${Math.random().toString(36).substr(2, 9)}`, []);
+    // `useId` rather than Math.random(): generating the id during render made
+    // the server and the client produce different markup, which breaks
+    // hydration for anyone rendering this library on the server.
+    const gradientId = `tear-grad-${useId().replace(/:/g, '')}`;
 
     const animationClass = useMemo(() => {
         if (variant === 'anime') return styles['animate-flow'];

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IrisWipe } from './IrisWipe';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const meta = {
     title: 'Effects/IrisWipe',
@@ -50,10 +50,15 @@ const InteractiveWrapper = ({
 }) => {
     const [isOpen, setIsOpen] = useState(args.isOpen ?? true);
 
-    // Sync state if args change (e.g. from controls)
-    useEffect(() => {
+    // Sync state when the Storybook control changes. Compared during render
+    // rather than written from an effect, which would render once with the old
+    // value before correcting itself.
+    // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+    const [prevArgOpen, setPrevArgOpen] = useState(args.isOpen);
+    if (args.isOpen !== prevArgOpen) {
+        setPrevArgOpen(args.isOpen);
         setIsOpen(args.isOpen ?? true);
-    }, [args.isOpen]);
+    }
 
     return (
         <div style={{

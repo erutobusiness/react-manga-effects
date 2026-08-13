@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import styles from './MoyamoyaMark.module.css';
 
 export interface MoyamoyaMarkProps {
@@ -42,7 +42,10 @@ export const MoyamoyaMark: React.FC<MoyamoyaMarkProps> = ({
     className = '',
     style,
 }) => {
-    const gradientId = useMemo(() => `moyamoya-grad-${Math.random().toString(36).substr(2, 9)}`, []);
+    // `useId` rather than Math.random(): generating the id during render made
+    // the server and the client produce different markup, which breaks
+    // hydration for anyone rendering this library on the server.
+    const gradientId = `moyamoya-grad-${useId().replace(/:/g, '')}`;
 
     const animationClass = useMemo(() => {
         if (variant === 'anime') return styles['animate-float'];

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import styles from './ShockMark.module.css';
 
 export interface ShockMarkProps {
@@ -42,7 +42,10 @@ export const ShockMark: React.FC<ShockMarkProps> = ({
     className = '',
     style,
 }) => {
-    const gradientId = useMemo(() => `shock-grad-${Math.random().toString(36).substr(2, 9)}`, []);
+    // `useId` rather than Math.random(): generating the id during render made
+    // the server and the client produce different markup, which breaks
+    // hydration for anyone rendering this library on the server.
+    const gradientId = `shock-grad-${useId().replace(/:/g, '')}`;
 
     const animationClass = useMemo(() => {
         if (variant === 'anime') return styles['animate-shock'];

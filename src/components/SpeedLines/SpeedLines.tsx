@@ -27,10 +27,13 @@ export const SpeedLines: React.FC<SpeedLinesProps> = ({
 
     const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
 
-    // Update center ref
+    // Update center ref.
+    // Depends on the coordinates, not the object: callers usually pass an inline
+    // literal, so depending on `center` itself would re-run this every render.
+    const { x: centerX, y: centerY } = center;
     useEffect(() => {
-        centerRef.current = center;
-    }, [center.x, center.y]);
+        centerRef.current = { x: centerX, y: centerY };
+    }, [centerX, centerY]);
 
     // Generate frames when config changes
     useEffect(() => {

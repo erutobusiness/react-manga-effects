@@ -7,29 +7,36 @@ export const useAnimationLoop = (
     const requestRef = useRef<number | undefined>(undefined);
     const previousTimeRef = useRef<number | undefined>(undefined);
 
-    const animate = (time: number) => {
-        if (previousTimeRef.current !== undefined) {
-            const deltaTime = time - previousTimeRef.current;
-            callback(deltaTime);
-        }
-        previousTimeRef.current = time;
-        requestRef.current = requestAnimationFrame(animate);
-    };
+    // The loop reads the latest callback through a ref. Holding it directly
+    // would either restart the animation on every render (callers usually pass
+    // an inline function) or force the effect to lie about its dependencies.
+    const callbackRef = useRef(callback);
+    useEffect(() => {
+        callbackRef.current = callback;
+    }, [callback]);
 
     useEffect(() => {
-        if (isActive) {
-            requestRef.current = requestAnimationFrame(animate);
-        } else {
-            if (requestRef.current) {
-                cancelAnimationFrame(requestRef.current);
-            }
+        if (!isActive) {
             previousTimeRef.current = undefined;
+            return;
         }
 
+        // Defined inside the effect so it is not a dependency of it.
+        const animate = (time: number) => {
+            if (previousTimeRef.current !== undefined) {
+                callbackRef.current(time - previousTimeRef.current);
+            }
+            previousTimeRef.current = time;
+            requestRef.current = requestAnimationFrame(animate);
+        };
+
+        requestRef.current = requestAnimationFrame(animate);
+
         return () => {
-            if (requestRef.current) {
+            if (requestRef.current !== undefined) {
                 cancelAnimationFrame(requestRef.current);
+                requestRef.current = undefined;
             }
         };
-    }, [isActive, callback]); // Check dependency stability carefully in usage
+    }, [isActive]);
 };

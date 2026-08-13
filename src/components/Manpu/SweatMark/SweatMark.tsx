@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import styles from './SweatMark.module.css';
 
 export interface SweatMarkProps {
@@ -43,7 +43,10 @@ export const SweatMark: React.FC<SweatMarkProps> = ({
     style,
 }) => {
     // Generate unique ID for gradients
-    const gradientId = useMemo(() => `sweat-grad-${Math.random().toString(36).substr(2, 9)}`, []);
+    // `useId` rather than Math.random(): generating the id during render made
+    // the server and the client produce different markup, which breaks
+    // hydration for anyone rendering this library on the server.
+    const gradientId = `sweat-grad-${useId().replace(/:/g, '')}`;
 
     // Animation class selection
     const animationClass = useMemo(() => {

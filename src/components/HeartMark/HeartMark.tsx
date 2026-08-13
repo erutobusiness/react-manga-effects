@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import styles from './HeartMark.module.css';
 
 export interface HeartMarkProps {
@@ -43,7 +43,10 @@ export const HeartMark: React.FC<HeartMarkProps> = ({
     style,
 }) => {
     // Generate unique ID for gradients to avoid conflicts if multiple hearts are on screen
-    const gradientId = useMemo(() => `heart-grad-${Math.random().toString(36).substr(2, 9)}`, []);
+    // `useId` rather than Math.random(): generating the id during render made
+    // the server and the client produce different markup, which breaks
+    // hydration for anyone rendering this library on the server.
+    const gradientId = `heart-grad-${useId().replace(/:/g, '')}`;
 
     // Animation class selection
     const animationClass = useMemo(() => {
